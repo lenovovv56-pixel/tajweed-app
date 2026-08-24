@@ -3,92 +3,713 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدليل العملي المباشر لتثبيت وتطبيق أكاديمية التجويد</title>
+    <title>أكاديمية التجويد التفاعلية - رحلة في علوم القرآن</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
-        body { font-family: 'Cairo', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .quran-font {
+            font-family: 'Amiri', serif;
+        }
+        .custom-gradient {
+            background: linear-gradient(135deg, #065f46 0%, #047857 50%, #064e3b 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.2);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #059669;
+            border-radius: 4px;
+        }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
-    <div class="max-w-4xl mx-auto space-y-8">
+<body class="min-h-screen flex flex-col">
+
+    <header class="custom-gradient shadow-lg border-b border-emerald-600/30 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-emerald-500/20 p-3 rounded-2xl border border-emerald-400/30">
+                    <i class="fa-solid fa-quran text-3xl text-emerald-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-black text-white tracking-wide">أكاديمية أحكام التجويد</h1>
+                    <p class="text-xs text-emerald-200">رحلة تفاعلية لإتقان تلاوة القرآن الكريم والسنة المطهرة</p>
+                </div>
+            </div>
+            <nav class="flex flex-wrap gap-2 justify-center">
+                <button onclick="switchTab('home')" id="btn-home" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-700 text-white shadow transition flex items-center gap-2">
+                    <i class="fa-solid fa-house"></i> الرئيسية
+                </button>
+                <button onclick="switchTab('rules')" id="btn-rules" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-900/60 hover:bg-emerald-700 text-emerald-100 transition flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> موسوعة الأحكام
+                </button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-900/60 hover:bg-emerald-700 text-emerald-100 transition flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad"></i> التحدي والاختبارات
+                </button>
+                <button onclick="switchTab('quran-lab')" id="btn-quran-lab" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-900/60 hover:bg-emerald-700 text-emerald-100 transition flex items-center gap-2">
+                    <i class="fa-solid fa-headphones"></i> مختبر الأمثلة
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8">
         
-        <header class="bg-slate-800 border border-slate-700 p-6 md:p-8 rounded-3xl shadow-xl flex flex-col md:flex-row items-center gap-6">
-            <div class="bg-emerald-500/20 p-4 rounded-2xl border border-emerald-500/30 text-emerald-400 text-4xl">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
-            </div>
-            <div class="space-y-2 text-center md:text-right">
-                <span class="bg-emerald-500/20 text-emerald-300 text-xs px-3 py-1 rounded-full font-bold">طريقتك الممتازة والصحيحة 100%</span>
-                <h1 class="text-2xl md:text-3xl font-black text-white">كيف تأخذ الكود وترفعه للحصول على رابط تطبيق مباشر</h1>
-                <p class="text-slate-400 text-sm">نعم يا غالي، طريقتك هي الأصح: تأخذ الكود (HTML)، ترفعه عبر استضافة مجانية أو منصة روابط، ثم تثبته كبرنامج مستقل على هاتفك.</p>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- Step 1 -->
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-3xl space-y-4 shadow-lg flex flex-col justify-between">
-                <div class="space-y-3">
-                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center text-xl border border-emerald-500/20">
-                        <span class="font-black">1</span>
+        <!-- HOME TAB -->
+        <section id="tab-home" class="space-y-8">
+            <div class="bg-gradient-to-r from-emerald-900/80 to-slate-900 border border-emerald-500/30 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                <div class="absolute -left-10 -bottom-10 opacity-10 text-9xl text-emerald-400 pointer-events-none">
+                    <i class="fa-solid fa-quran"></i>
+                </div>
+                <div class="max-w-2xl relative z-10">
+                    <span class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full border border-emerald-400/30 inline-block mb-4">
+                        التعلم التفاعلي الممتع
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
+                        أتقن تلاوة كتاب الله بأحكام التجويد الصحيحة
+                    </h2>
+                    <p class="text-emerald-100 text-base md:text-lg mb-8 leading-relaxed">
+                        تعلّم أحكام النون الساكنة والتنوين، الميم الساكنة، المدود، التفخيم والترقيق، ومخارج الحروف بطريقة مبسطة مدعومة بأمثلة قرآنية وأحاديث نبوية شريفة واختبارات قياس مستوى فورية.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="switchTab('quiz')" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black px-6 py-3 rounded-2xl shadow-lg transition flex items-center gap-3">
+                            <i class="fa-solid fa-play"></i> ابدأ الاختبار الآن
+                        </button>
+                        <button onclick="switchTab('rules')" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-bold px-6 py-3 rounded-2xl shadow transition flex items-center gap-3">
+                            <i class="fa-solid fa-book"></i> استعرض الأحكام والأمثلة
+                        </button>
                     </div>
-                    <h3 class="text-lg font-bold text-white">حفظ ملف الكود (index.html)</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        قم بنسخ أكواد لعبة "أكاديمية أحكام التجويد" الكاملة، واحفظها في ملف نصي على حاسوبك أو هاتفك باسم <code class="bg-slate-900 text-emerald-400 px-2 py-0.5 rounded">index.html</code>.
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6 card-hover">
+                    <div class="bg-emerald-500/10 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4 border border-emerald-500/20">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">موسوعة شاملة كاملة</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        تضم جميع أحكام التجويد الرئيسية والفرعية مرتبة ومصنفة لتسهيل الفهم والاستيعاب مع القواعد الدقيقة.
                     </p>
                 </div>
-                <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 text-xs text-emerald-300">
-                    <i class="fa-solid fa-circle-check ml-1"></i> هذا هو الملف الأساسي الذي يحتوي على كل اللعبة والموسوعة.
-                </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-3xl space-y-4 shadow-lg flex flex-col justify-between">
-                <div class="space-y-3">
-                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center text-xl border border-emerald-500/20">
-                        <span class="font-black">2</span>
+                <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6 card-hover">
+                    <div class="bg-emerald-500/10 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4 border border-emerald-500/20">
+                        <i class="fa-solid fa-quote-right"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-white">رفعه على استضافة مجانية فورية</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        توجه إلى مواقع الاستضافة الفورية المجانية مثل:
-                        <br>• <strong>Netlify Drop</strong> (اسحب الملف وأفلته فقط ليولد لك رابطاً مباشراً)
-                        <br>• أو <strong>GitHub Pages</strong>
+                    <h3 class="text-xl font-bold text-white mb-2">أمثلة من الوحيين</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        شواهد وأمثلة حية مستخرجة من آيات الذكر الحكيم والأحاديث النبوية الشريفة لتطبيق الأحكام عملياً.
                     </p>
                 </div>
-                <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 text-xs text-emerald-300">
-                    <i class="fa-solid fa-circle-check ml-1"></i> ستحصل فوراً على رابط ويب خاص بك (مثل: <code class="text-emerald-400">my-tajweed.netlify.app</code>).
+                <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6 card-hover">
+                    <div class="bg-emerald-500/10 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4 border border-emerald-500/20">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">اختبارات ونتائج فورية</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        اختبر معلوماتك في كل باب مع نظام تصحيح فوري وعرض تفصيلي لدرجتك ومستواك في علم التجويد.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RULES ENCYCLOPEDIA TAB -->
+        <section id="tab-rules" class="hidden space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-800/40 p-4 rounded-2xl border border-slate-700">
+                <h2 class="text-2xl font-bold text-emerald-400 flex items-center gap-3">
+                    <i class="fa-solid fa-book-bookmark"></i> موسوعة أحكام التجويد الشاملة
+                </h2>
+                <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                    <button onclick="filterRules('all')" class="rule-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white transition active-filter">الكل</button>
+                    <button onclick="filterRules('noon')" class="rule-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-300 hover:bg-slate-600 transition">النون الساكنة والتنوين</button>
+                    <button onclick="filterRules('meem')" class="rule-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-300 hover:bg-slate-600 transition">الميم الساكنة</button>
+                    <button onclick="filterRules('madd')" class="rule-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-300 hover:bg-slate-600 transition">المدود</button>
+                    <button onclick="filterRules('others')" class="rule-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-300 hover:bg-slate-600 transition">أحكام أخرى</button>
                 </div>
             </div>
 
-        </div>
+            <!-- Rules Grid -->
+            <div id="rules-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
 
-        <div class="bg-slate-800 border border-slate-700 p-6 md:p-8 rounded-3xl space-y-6 shadow-xl">
-            <h2 class="text-xl font-bold text-emerald-400 flex items-center gap-3">
-                <i class="fa-solid fa-mobile-screen"></i> الخطوة الأخيرة: تثبيته كبرنامج دائم على هاتفك
-            </h2>
+        <!-- QUIZ / CHALLENGE TAB -->
+        <section id="tab-quiz" class="hidden space-y-6 max-w-3xl mx-auto">
+            <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 md:p-8 shadow-xl">
+                
+                <!-- Quiz Setup / Category Selection -->
+                <div id="quiz-setup" class="space-y-6">
+                    <div class="text-center space-y-2">
+                        <div class="inline-block bg-emerald-500/20 text-emerald-400 p-3 rounded-full mb-2">
+                            <i class="fa-solid fa-brain text-2xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">تحدي إتقان التجويد</h2>
+                        <p class="text-slate-400 text-sm">اختر القسم الذي تريد اختبار معلوماتك فيه، وأثبت جدارتك في علوم التلاوة!</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button onclick="startQuiz('all')" class="bg-slate-700/50 hover:bg-emerald-600/20 border border-slate-600 hover:border-emerald-500 p-4 rounded-2xl text-right transition group flex flex-col gap-2">
+                            <span class="text-emerald-400 font-bold text-lg group-hover:text-emerald-300"><i class="fa-solid fa-star ml-2"></i> الاختبار الشامل</span>
+                            <span class="text-xs text-slate-400">يضم جميع أحكام التجويد (سؤال متنوع)</span>
+                        </button>
+                        <button onclick="startQuiz('noon')" class="bg-slate-700/50 hover:bg-emerald-600/20 border border-slate-600 hover:border-emerald-500 p-4 rounded-2xl text-right transition group flex flex-col gap-2">
+                            <span class="text-emerald-400 font-bold text-lg group-hover:text-emerald-300"><i class="fa-solid fa-circle-dot ml-2"></i> النون الساكنة والتنوين</span>
+                            <span class="text-xs text-slate-400">إظهار، إدغام، إقلاب، إخفاء</span>
+                        </button>
+                        <button onclick="startQuiz('meem')" class="bg-slate-700/50 hover:bg-emerald-600/20 border border-slate-600 hover:border-emerald-500 p-4 rounded-2xl text-right transition group flex flex-col gap-2">
+                            <span class="text-emerald-400 font-bold text-lg group-hover:text-emerald-300"><i class="fa-solid fa-m ml-2"></i> أحكام الميم الساكنة</span>
+                            <span class="text-xs text-slate-400">إخفاء شفوي، إدغام شفوي، إظهار شفوي</span>
+                        </button>
+                        <button onclick="startQuiz('madd')" class="bg-slate-700/50 hover:bg-emerald-600/20 border border-slate-600 hover:border-emerald-500 p-4 rounded-2xl text-right transition group flex flex-col gap-2">
+                            <span class="text-emerald-400 font-bold text-lg group-hover:text-emerald-300"><i class="fa-solid fa-wave-square ml-2"></i> المدود وأحكامها</span>
+                            <span class="text-xs text-slate-400">مد طبيعي، متصل، منفصل، لازم، عارض</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Active Screen -->
+                <div id="quiz-active" class="hidden space-y-6">
+                    <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+                        <span id="quiz-progress" class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">السؤال 1 من 5</span>
+                        <div class="flex items-center gap-2 text-slate-300 text-sm font-semibold">
+                            <i class="fa-solid fa-trophy text-amber-400"></i> النتيجة: <span id="current-score" class="text-white font-bold">0</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h3 id="question-text" class="text-lg md:text-xl font-bold text-white leading-relaxed"></h3>
+                        <div id="question-example" class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-2xl hidden">
+                            <p class="text-xs text-emerald-400 font-bold mb-1">مثال تطبيقي:</p>
+                            <p id="question-example-text" class="quran-font text-xl text-emerald-100 text-center"></p>
+                        </div>
+                    </div>
+
+                    <div id="options-container" class="space-y-3">
+                        <!-- Options populated via JS -->
+                    </div>
+
+                    <div id="explanation-box" class="hidden bg-slate-900 border border-slate-700 p-4 rounded-2xl text-sm space-y-2">
+                        <p id="explanation-title" class="font-bold"></p>
+                        <p id="explanation-text" class="text-slate-300"></p>
+                        <button onclick="nextQuestion()" class="mt-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">السؤال التالي <i class="fa-solid fa-arrow-left mr-1"></i></button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result Screen -->
+                <div id="quiz-result" class="hidden text-center space-y-6 py-6">
+                    <div class="w-20 h-20 bg-emerald-500/20 border border-emerald-400/40 rounded-full flex items-center justify-center mx-auto text-emerald-400 text-3xl">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-bold text-white">أتممت الاختبار بنجاح!</h3>
+                        <p class="text-slate-400 text-sm">لقد أكملت اختبار أحكام التجويد بنجاح تام.</p>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-sm mx-auto space-y-2">
+                        <p class="text-xs text-slate-400">نتيجتك النهائية</p>
+                        <p id="final-score-display" class="text-4xl font-black text-emerald-400">0 / 0</p>
+                        <p id="result-message" class="text-sm font-semibold text-emerald-200 mt-2"></p>
+                    </div>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="resetQuiz()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm transition">
+                            <i class="fa-solid fa-rotate-right ml-1"></i> إعادة الاختبار
+                        </button>
+                        <button onclick="switchTab('home')" class="bg-slate-700 hover:bg-slate-600 text-white font-bold px-6 py-3 rounded-xl text-sm transition">
+                            <i class="fa-solid fa-house ml-1"></i> الرئيسية
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- QURAN LAB TAB / EXAMPLES -->
+        <section id="tab-quran-lab" class="hidden space-y-6">
+            <div class="bg-slate-800/60 border border-slate-700 rounded-3xl p-6 md:p-8 space-y-6">
+                <div class="text-center space-y-2 max-w-xl mx-auto">
+                    <h2 class="text-2xl font-bold text-white flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-headphones text-emerald-400"></i> مختبر الأمثلة القرآنية والنبوية
+                    </h2>
+                    <p class="text-slate-400 text-sm">استكشف أمثلة حية من الآيات الكريمة والأحاديث النبوية الشريفة مع توضيح مواضع تطبيق أحكام التجويد بدقة.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="lab-categories">
+                    <button onclick="filterLab('quran')" class="lab-btn bg-emerald-600 text-white p-4 rounded-2xl text-center font-bold text-sm shadow transition">
+                        <i class="fa-solid fa-quran block text-xl mb-1"></i> آيات قرآنية كريمة
+                    </button>
+                    <button onclick="filterLab('hadith')" class="lab-btn bg-slate-700 text-slate-300 hover:bg-slate-600 p-4 rounded-2xl text-center font-bold text-sm shadow transition">
+                        <i class="fa-solid fa-book-tanakh block text-xl mb-1"></i> أحاديث نبوية شريفة
+                    </button>
+                    <button onclick="filterLab('all')" class="lab-btn bg-slate-700 text-slate-300 hover:bg-slate-600 p-4 rounded-2xl text-center font-bold text-sm shadow transition">
+                        <i class="fa-solid fa-layer-group block text-xl mb-1"></i> عرض الكل
+                    </button>
+                </div>
+
+                <div id="lab-examples-container" class="space-y-4">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-400 mt-auto">
+        <p>جميع الأحكام مأخوذة من كتب علم التجويد المعتمدة (حفص عن عاصم من طريق الشاطبية).</p>
+        <p class="mt-1 text-emerald-400">نسأل الله أن ينفع بها أهل القرآن.</p>
+    </footer>
+
+    <script>
+        // Data Store for Tajweed Rules
+        const tajweedRules = [
+            {
+                id: 1,
+                category: 'noon',
+                title: 'الإظهار الحلقي (للنون الساكنة والتنوين)',
+                definition: 'هو أن تخرج النون الساكنة أو التنوين من مخرجها من غير غنة كاملة إذا جاء بعدها حرف من حروف الحلق الستة.',
+                letters: 'ء، هـ، ع، ح، غ، خ (مجموعة في أوائل فناء أخيك عِلْمٌ حازه غيرُ خاسر)',
+                example: 'مِنْ حَكِيمٍ / عَلِيمٌ حَكِيمٌ',
+                source: 'سورة الملك / سورة البقرة',
+                explanation: 'ظهرت نون (مِنْ) وحرف الحاء (حَكِيمٍ) بوضوح دون غنة زائدة.'
+            },
+            {
+                id: 2,
+                category: 'noon',
+                title: 'الإدغام (بغنة وبدون غنة)',
+                definition: 'هو إدخال حرف ساكن في حرف متحرك بحيث يصيران حرفاً واحداً مشدداً كالثاني.',
+                letters: 'يرملون (يَرْمُلُونَ) - بغنة: ينمو (ي، ن، م، و) - بدون غنة: ر، ل',
+                example: 'مَنْ يَعْمَلْ / مِن لَّدُنْك',
+                source: 'سورة الزلزلة / سورة مريم',
+                explanation: 'أُدغمت النون في الياء (مَنْ يَعْمَلْ) بغنة كاملة، وفي اللام (مِن لَّدُنْك) بغير غنة.'
+            },
+            {
+                id: 3,
+                category: 'noon',
+                title: 'الإقلاب',
+                definition: 'هو قلب النون الساكنة أو التنوين ميماً مخفاة بغنة عند الباء.',
+                letters: 'حرف الباء (ب)',
+                example: 'مِن بَعْدِ / سَمِيعٌ بَصِيرٌ',
+                source: 'سورة البقرة / سورة الحجرات',
+                explanation: 'تُقلب النون الساكنة ميماً خالصة مع غنة وإخفاء الشفتين قليلاً عند الباء.'
+            },
+            {
+                id: 4,
+                category: 'noon',
+                title: 'الإخفاء الحقيقي',
+                definition: 'هو النطق بالحرف بصفة بين الإدغام والإظهار، عاريًا عن التشديد مع بقاء الغنة في الحرف الأول.',
+                letters: 'باقي حروف الهفا (15 حرفاً الأوائل من أواخر الكلمات في البيت صف ذا ثنا كم جاد شخص قد سما ...)',
+                example: 'مِنْ شَرِّ / كِتَابٌ كَرِيمٌ',
+                source: 'سورة الفلق / سورة الانشقاق',
+                explanation: 'تُخفى النون الساكنة عند الشين أو الكاف مع بقاء الغنة بمقدار حركتين.'
+            },
+            {
+                id: 5,
+                category: 'meem',
+                title: 'الإخفاء الشفوي (للميم الساكنة)',
+                definition: 'إذا جاء بعد الميم الساكنة حرف الباء، تُخفى الميم مع الغنة.',
+                letters: 'حرف الباء (ب)',
+                example: 'تَرْمِيهِمْ بِحِجَارَةٍ',
+                source: 'سورة الفيل',
+                explanation: 'أُخفيت الميم الساكنة في (تَرْمِيهِمْ) عند حرف (بِحِجَارَةٍ) مع غنة.'
+            },
+            {
+                id: 6,
+                category: 'meem',
+                title: 'الإدغام الشفوي (متحركة في ساكنة / ميم مثلين)',
+                definition: 'إذا جاء بعد الميم الساكنة ميم متحركة، تدغم فيها وتصير ميماً مشددة بغنة.',
+                letters: 'حرف الميم (م)',
+                example: 'لَهُم مَّا يَشْتَهُونَ / كُم مِّنْ فِئَةٍ',
+                source: 'سورة النحل / سورة البقرة',
+                explanation: 'أُدغمت الميم الساكنة في الميم المتحركة بعدها بغنة كاملة.'
+            },
+            {
+                id: 7,
+                category: 'meem',
+                title: 'الإظهار الشفوي (للميم الساكنة)',
+                definition: 'إذا جاء بعد الميم الساكنة أي حرف غير الميم والباء، تُظهر بغير غنة كاملة.',
+                letters: 'باقي حروف الهجاء ما عدا الباء والميم',
+                example: 'أَمْ لَمْ تُنْذِرْهُمْ / عَلَيْهِمْ غَيْرِ',
+                source: 'سورة يس / سورة الفاتحة',
+                explanation: 'تظهر الميم الساكنة بوضوح عند مجيء التاء أو الغين بعدها.'
+            },
+            {
+                id: 8,
+                category: 'madd',
+                title: 'المد الطبيعي (الأصلي)',
+                definition: 'هو المد الذي لا تقوم ذات الحرف إلا به، ولا توقف له على سبب كهمز أو سكون.',
+                letters: 'حروف المد الثلاثة (الألف المفتوح ما قبلها، الواو المضموم ما قبلها، الياء المكسور ما قبلها)',
+                example: 'قَالَ / يَقُولُ / قِيلَ',
+                source: 'متفرقة في القرآن الكريم',
+                explanation: 'يُمد بمقدار حركتين فقط.'
+            },
+            {
+                id: 9,
+                category: 'madd',
+                title: 'المد المتصل',
+                definition: 'أن يأتي حرف المد وبعده همز في كلمة واحدة.',
+                letters: 'حرف المد + همزة متصلة في نفس الكلمة',
+                example: 'السَّمَاءِ / جَاءَ / سُوءُ',
+                source: 'سورة البقرة / سورة النصر',
+                explanation: 'يُمد وجوباً بمقدار 4 أو 5 حركات.'
+            },
+            {
+                id: 10,
+                category: 'madd',
+                title: 'المد المنفصل',
+                definition: 'أن يأتي حرف المد في آخر الكلمة والهمزة في أول الكلمة التي بعدها.',
+                letters: 'حرف مد بآخر كلمة + همزة باول الكلمة التالية',
+                example: 'فِي أَنْفُسِكُمْ / بِمَا أُنْزِلَ',
+                source: 'سورة الذاريات / سورة البقرة',
+                explanation: 'يُمد جوازاً بمقدار 2 أو 4 أو 5 حركات.'
+            }
+        ];
+
+        // Data Store for Quranic and Hadith Examples Lab
+        const labData = [
+            {
+                type: 'quran',
+                title: 'آية الإخفاء الحقيقي والإظهار',
+                reference: 'سورة البقرة (آية 22)',
+                text: '﴿ الَّذِي جَعَلَ لَكُمُ الْأَرْضَ فِرَاشًا وَالسَّمَاءَ بِنَاءً وَأَنْزَلَ مِنَ السَّمَاءِ مَاءً فَأَخْرَجَ بِهِ مِنَ الثَّمَرَاتِ رِزْقًا لَكُمْ ﴾',
+                analysis: [
+                    { rule: 'وَأَنْزَلَ', detail: 'إخفاء حقيقي للنون الساكنة عند الزاي بغنة.' },
+                    { rule: 'مِنَ السَّمَاءِ', detail: 'إدغام شمسي لللام والسين.' },
+                    { rule: 'رِزْقًا لَكُمْ', detail: 'إدغام بغير غنة للتنوين مع اللام.' }
+                ]
+            },
+            {
+                type: 'quran',
+                title: 'آية أحكام الميم الساكنة',
+                reference: 'سورة قريش',
+                text: '﴿ الَّذِي أَطْعَمَهُمْ مِنْ جُوعٍ وَآَمَنَهُمْ مِنْ خَوْفٍ ﴾',
+                analysis: [
+                    { rule: 'أَطْعَمَهُمْ مِنْ', detail: 'إدغام شفوي (ميم ساكنة بعدها ميم متحركة).' },
+                    { rule: 'وَآَمَنَهُمْ مِنْ', detail: 'إدغام شفوي (ميم ساكنة بعدها ميم متحركة).' }
+                ]
+            },
+            {
+                type: 'hadith',
+                title: 'حديث نبوي شريف في آداب التلاوة',
+                reference: 'رواه البخاري ومسلم',
+                text: '« خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ »',
+                analysis: [
+                    { rule: 'مَنْ تَعَلَّمَ', detail: 'إخفاء حقيقي للنون الساكنة عند التاء بغنة.' },
+                    { rule: 'تَعَلَّمَ الْقُرْآنَ', detail: 'مد طبيعي في (تعلم) ومد عارض أو طبيعي حسب الوصل والوقف.' }
+                ]
+            },
+            {
+                type: 'hadith',
+                title: 'حديث نبوي شريف في فضل السكينة',
+                reference: 'صحيح مسلم',
+                text: '« وَمَا اجْتَمَعَ قَوْمٌ فِي بَيْتٍ مِنْ بُيُوتِ اللَّهِ يَتْلُونَ كِتَابَ اللَّهِ وَيَتَدَارَسُونَهُ بَيْنَهُمْ إِلَّا نَزَلَتْ عَلَيْهِمُ السَّكِينَةُ »',
+                analysis: [
+                    { rule: 'فِي بَيْتٍ مِنْ', detail: 'إخفاء حقيقي للتنوين عند الميم (أو إدغام بغنة حسب الرواية، وهنا تنوين مكسور مع ميم).' },
+                    { rule: 'مِنْ بُيُوتِ', detail: 'إقلاب للنون الساكنة ميماً عند الباء بغنة (مِنْ بُيُوتِ).' }
+                ]
+            }
+        ];
+
+        // Quiz Question Bank
+        const quizQuestions = [
+            {
+                category: 'noon',
+                question: 'ما حكم النون الساكنة في قوله تعالى: ﴿ مِنْ حَكِيمٍ ﴾؟',
+                example: 'مِنْ حَكِيمٍ',
+                options: ['إظهار حلقي', 'إدغام بغنة', 'إقلاب', 'إخفاء حقيقي'],
+                correct: 0,
+                explanation: 'جاءت النون الساكنة وبعدها حرف الحاء، وهو من حروف الحلق الستة، فالحكم هو الإظهار الحلقي.'
+            },
+            {
+                category: 'noon',
+                question: 'ما الحكم التجويدي في قوله تعالى: ﴿ مَنْ يَعْمَلْ ﴾؟',
+                example: 'مَنْ يَعْمَلْ',
+                options: ['إظهار', 'إدغام بغنة', 'إقلاب', 'إخفاء'],
+                correct: 1,
+                explanation: 'جاءت النون الساكنة بعدها حرف الياء، وهو من حروف (يرملون)، ويدغم بغنة كاملة في الياء.'
+            },
+            {
+                category: 'noon',
+                question: 'ما الحكم التجويدي عند ملاقات النون الساكنة لحرف الباء في ﴿ مِنْ بَعْدِ ﴾؟',
+                example: 'مِنْ بَعْدِ',
+                options: ['إظهار', 'إدغام', 'إقلاب', 'إخفاء شفوي'],
+                correct: 2,
+                explanation: 'إذا جاء بعد النون الساكنة أو التنوين حرف الباء تقلب نوناً ميماً مخفاة بغنة، وهو الإقلاب.'
+            },
+            {
+                category: 'meem',
+                question: 'ما حكم الميم الساكنة في قوله تعالى: ﴿ تَرْمِيهِمْ بِحِجَارَةٍ ﴾؟',
+                example: 'تَرْمِيهِمْ بِحِجَارَةٍ',
+                options: ['إظهار شفوي', 'إدغام شفوي', 'إخفاء شفوي', 'إدغام بغنة'],
+                correct: 2,
+                explanation: 'جاءت الميم الساكنة في (ترميهم) بعدها حرف الباء (بحجارة)، فحكمها الإخفاء الشفوي.'
+            },
+            {
+                category: 'meem',
+                question: 'ما حكم الميم الساكنة في قوله تعالى: ﴿ لَهُم مَّا يَشْتَهُونَ ﴾؟',
+                example: 'لَهُم مَّا يَشْتَهُونَ',
+                options: ['إظهار شفوي', 'إدغام شفوي (مثلين صغير)', 'إخفاء شفوي', 'إظهار حلقي'],
+                correct: 1,
+                explanation: 'جاءت ميم ساكنة بعدها ميم متحركة، فتتطابقان وتدغمان مع الغنة (إدغام شفوي أو مثلين).'
+            },
+            {
+                category: 'madd',
+                question: 'ما نوع المد في قوله تعالى: ﴿ السَّمَاءِ ﴾؟',
+                example: 'السَّمَاءِ',
+                options: ['مد طبيعي', 'مد متصل واجب', 'مد منفصل جائز', 'مد لازم'],
+                correct: 1,
+                explanation: 'جاء حرف المد (الألف) وبعده الهمز في نفس الكلمة، فهو مد متصل واجب المد 4 أو 5 حركات.'
+            },
+            {
+                category: 'madd',
+                question: 'ما نوع المد في قوله تعالى: ﴿ فِي أَنْفُسِكُمْ ﴾؟',
+                example: 'فِي أَنْفُسِكُمْ',
+                options: ['مد متصل', 'مد طبيعي', 'مد منفصل جائز', 'مد عارض للسكون'],
+                correct: 2,
+                explanation: 'جاء حرف المد (الياء) في آخر كلمة (في) والهمزة في أول الكلمة التي بعدها (أنفسكم)، فهو مد منفصل جائز.'
+            }
+        ];
+
+        let currentQuizList = [];
+        let currentQuestionIdx = 0;
+        let score = 0;
+
+        // Navigation Tab Switcher
+        function switchTab(tabId) {
+            document.getElementById('tab-home').classList.add('hidden');
+            document.getElementById('tab-rules').classList.add('hidden');
+            document.getElementById('tab-quiz').classList.add('hidden');
+            document.getElementById('tab-quran-lab').classList.add('hidden');
+
+            document.getElementById('btn-home').className = "px-4 py-2 rounded-xl text-sm font-bold bg-emerald-900/60 hover:bg-emerald-700 text-emerald-100 transition flex items-center gap-2";
+            document.getElementById('btn-rules').className = "px-4 py-2 rounded-xl text-sm font-bold bg-emerald-900/60 hover:bg-emerald-700 text-emerald-100 transition flex items-center gap-2";
+            document.getElementById('btn-quiz').className = "px-4 py-2 rounded-xl text-sm font-bold bg-emerald-900/60 hover:bg-emerald-700 text-emerald-100 transition flex items-center gap-2";
+            document.getElementById('btn-quran-lab').className = "px-4 py-2 rounded-xl text-sm font-bold bg-emerald-900/60 hover:bg-emerald-700 text-emerald-100 transition flex items-center gap-2";
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`btn-${tabId}`).className = "px-4 py-2 rounded-xl text-sm font-bold bg-emerald-700 text-white shadow transition flex items-center gap-2";
+
+            if (tabId === 'rules') renderRules('all');
+            if (tabId === 'quran-lab') renderLab('all');
+        }
+
+        // Render Rules Encyclopedia
+        function filterRules(category) {
+            const btns = document.querySelectorAll('.rule-filter-btn');
+            btns.forEach(b => {
+                b.className = "rule-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-300 hover:bg-slate-600 transition";
+            });
+            event.target.className = "rule-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white transition";
+            renderRules(category);
+        }
+
+        function renderRules(category) {
+            const container = document.getElementById('rules-container');
+            container.innerHTML = '';
             
-            <div class="space-y-4 text-sm text-slate-300">
-                <div class="flex gap-4 items-start bg-slate-900/60 p-4 rounded-2xl border border-slate-700">
-                    <span class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center shrink-0">✓</span>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-white">فتح الرابط من متصفح الجوال</h4>
-                        <p class="text-slate-400 text-xs leading-relaxed">افتح الرابط الذي حصلت عليه (من Netlify مثلاً) عبر متصفح هاتفك (كروم أو سفاري).</p>
-                    </div>
-                </div>
+            const filtered = category === 'all' ? tajweedRules : tajweedRules.filter(r => r.category === category);
 
-                <div class="flex gap-4 items-start bg-slate-900/60 p-4 rounded-2xl border border-slate-700">
-                    <span class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center shrink-0">✓</span>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-white">اختر "إضافة إلى الشاشة الرئيسية" (Add to Home Screen)</h4>
-                        <p class="text-slate-400 text-xs leading-relaxed">
-                            اضغط على قائمة المتصفح واختر <strong>"إضافة إلى الشاشة الرئيسية"</strong>. ستظهر أيقونة التطبيق مباشرة بجانب تطبيقات هاتفك الأساسية، وتفتح كبرنامج مستقل بالكامل وبدون إنترنت تماماً!
-                        </p>
+            filtered.forEach(rule => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4 card-hover";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg font-bold text-emerald-400">${rule.title}</h3>
+                        <span class="text-xs bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2.5 py-1 rounded-full font-semibold">${rule.source}</span>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <p class="text-slate-300 text-sm leading-relaxed">${rule.definition}</p>
+                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700 space-y-1">
+                        <p class="text-xs text-emerald-400 font-bold">الحروف أو الضابط:</p>
+                        <p class="text-xs text-slate-300">${rule.letters}</p>
+                    </div>
+                    <div class="bg-emerald-950/40 p-4 rounded-xl border border-emerald-500/30 text-center space-y-1">
+                        <span class="text-xs text-emerald-400 font-bold block">مثال تطبيقي:</span>
+                        <span class="quran-font text-xl text-emerald-100">${rule.example}</span>
+                        <p class="text-xs text-slate-400 mt-2">${rule.explanation}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
 
-    </div>
+        // Render Quran Lab Examples
+        function filterLab(type) {
+            const btns = document.querySelectorAll('.lab-btn');
+            btns.forEach(b => {
+                b.className = "lab-btn bg-slate-700 text-slate-300 hover:bg-slate-600 p-4 rounded-2xl text-center font-bold text-sm shadow transition";
+            });
+            event.currentTarget.className = "lab-btn bg-emerald-600 text-white p-4 rounded-2xl text-center font-bold text-sm shadow transition";
+            renderLab(type);
+        }
+
+        function renderLab(type) {
+            const container = document.getElementById('lab-examples-container');
+            container.innerHTML = '';
+
+            const filtered = type === 'all' ? labData : labData.filter(item => item.type === type);
+
+            filtered.forEach(item => {
+                const box = document.createElement('div');
+                box.className = "bg-slate-900 border border-slate-700 rounded-2xl p-6 space-y-4";
+                
+                let analysisHtml = '';
+                item.analysis.forEach(a => {
+                    analysisHtml += `
+                        <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-lg text-xs font-bold border border-emerald-500/30">${a.rule}</span>
+                            <span class="text-slate-300 text-xs sm:text-sm">${a.detail}</span>
+                        </div>
+                    `;
+                });
+
+                box.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                        <h4 class="font-bold text-white text-base">${item.title}</h4>
+                        <span class="text-xs bg-slate-800 text-emerald-400 px-3 py-1 rounded-full border border-slate-700 font-semibold">${item.reference}</span>
+                    </div>
+                    <div class="bg-emerald-950/30 border border-emerald-500/20 p-5 rounded-2xl text-center">
+                        <p class="quran-font text-2xl md:text-3xl text-emerald-100 leading-loose">${item.text}</p>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-xs font-bold text-emerald-400">التحليل التجويدي:</p>
+                        <div class="space-y-2">
+                            ${analysisHtml}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        // Quiz Logic
+        function startQuiz(category) {
+            if (category === 'all') {
+                currentQuizList = [...quizQuestions];
+            } else {
+                currentQuizList = quizQuestions.filter(q => q.category === category);
+            }
+
+            // Shuffle questions slightly for variety
+            currentQuizList.sort(() => Math.random() - 0.5);
+
+            currentQuestionIdx = 0;
+            score = 0;
+
+            document.getElementById('quiz-setup').classList.add('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-active').classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIdx >= currentQuizList.length) {
+                showQuizResult();
+                return;
+            }
+
+            const q = currentQuizList[currentQuestionIdx];
+            document.getElementById('quiz-progress').innerText = `السؤال ${currentQuestionIdx + 1} من ${currentQuizList.length}`;
+            document.getElementById('current-score').innerText = score;
+            document.getElementById('question-text').innerText = q.question;
+
+            const exampleBox = document.getElementById('question-example');
+            if (q.example) {
+                exampleBox.classList.remove('hidden');
+                document.getElementById('question-example-text').innerText = q.example;
+            } else {
+                exampleBox.classList.add('hidden');
+            }
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            document.getElementById('explanation-box').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-right bg-slate-700/60 hover:bg-slate-700 border border-slate-600 p-4 rounded-2xl text-white font-bold text-sm transition flex justify-between items-center group";
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs group-hover:bg-emerald-500 group-hover:text-slate-950 transition">${idx + 1}</span>
+                `;
+                btn.onclick = () => selectOption(idx, q.correct, q.explanation);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIdx, correctIdx, explanation) {
+            const optionsContainer = document.getElementById('options-container');
+            const buttons = optionsContainer.getElementsByTagName('button');
+
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                if (i === correctIdx) {
+                    buttons[i].className = "w-full text-right bg-emerald-600/30 border border-emerald-500 p-4 rounded-2xl text-emerald-200 font-bold text-sm flex justify-between items-center";
+                } else if (i === selectedIdx && selectedIdx !== correctIdx) {
+                    buttons[i].className = "w-full text-right bg-rose-600/30 border border-rose-500 p-4 rounded-2xl text-rose-200 font-bold text-sm flex justify-between items-center";
+                } else {
+                    buttons[i].className = "w-full text-right bg-slate-800/40 border border-slate-700 p-4 rounded-2xl text-slate-500 font-bold text-sm flex justify-between items-center opacity-50";
+                }
+            }
+
+            if (selectedIdx === correctIdx) {
+                score += 10;
+                document.getElementById('current-score').innerText = score;
+                document.getElementById('explanation-title').innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400 ml-1"></i> إجابة صحيحة!';
+                document.getElementById('explanation-title').className = "font-bold text-emerald-400";
+            } else {
+                document.getElementById('explanation-title').innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-400 ml-1"></i> إجابة غير دقيقة';
+                document.getElementById('explanation-title').className = "font-bold text-rose-400";
+            }
+
+            document.getElementById('explanation-text').innerText = explanation;
+            document.getElementById('explanation-box').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIdx++;
+            loadQuestion();
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-active').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+
+            const maxPossibleScore = currentQuizList.length * 10;
+            document.getElementById('final-score-display').innerText = `${score} / ${maxPossibleScore}`;
+
+            const percentage = (score / maxPossibleScore) * 100;
+            let msg = '';
+            if (percentage === 100) {
+                msg = 'ما شاء الله! ممتاز جداً، إتقان تام لأحكام التجويد.';
+            } else if (percentage >= 70) {
+                msg = 'أداء رائع ومبشر، لديك حصيلة علمية ممتازة في التجويد.';
+            } else {
+                msg = 'جيد، ننصحك بمراجعة موسوعة الأحكام والأمثلة لإتقان التلاوة بشكل أفضل.';
+            }
+            document.getElementById('result-message').innerText = msg;
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-setup').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
